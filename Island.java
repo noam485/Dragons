@@ -35,4 +35,12 @@ public abstract class Island {
             dragon.updatePossibleImaginedIslands();
         }
     }
+
+    public int depth() {
+        int depth = 0;
+        for (Dragon dragon: inIslandDragons.values()) {
+            depth = Math.max(depth, dragon.depth());
+        }
+        return depth;
+    }
 }

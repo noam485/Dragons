@@ -8,7 +8,7 @@ public class Main {
 			realIsland.updateLeavingDragonsExpectation();
 			realIsland.awareBlueEyedRealDragonsLeave();
 			realIsland.updatePossibleImaginedIslands();
-			System.out.println(realIsland.inIslandDragons.size() + " / " + realIsland.outOfIslandDragons.size());
+			System.out.println(realIsland.inIslandDragons.size() + " / " + realIsland.outOfIslandDragons.size() + ". depth: " + realIsland.depth());
 		}
 	}
 

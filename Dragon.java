@@ -55,4 +55,13 @@ public abstract class Dragon {
         }
         imaginedIslands.removeAll(impossibleImaginedIslands);
     }
+
+    public int depth() {
+        if (imaginedIslands == null) return 1;
+        int depth = 0;
+        for (ImaginedIsland imaginedIsland: imaginedIslands) {
+            depth = Math.max(depth, imaginedIsland.depth());
+        }
+        return depth + 1;
+    }
 }
