@@ -10,9 +10,9 @@ public class RealIsland extends Island {
         }
         for (int i=1; i<=dragonsCount; i++) {
             RealPerson realDragon = new RealPerson(this, "Dragon_" + i);
-            inIslandDragons.put(realDragon.id, realDragon);
+            inIslandPersons.put(realDragon.id, realDragon);
         }
-        for (Person person : inIslandDragons.values()) {
+        for (Person person : inIslandPersons.values()) {
             person.createImaginedPossibleIslands();
         }
     }
@@ -23,21 +23,21 @@ public class RealIsland extends Island {
     }
 
     @Override
-    public void updateLeavingDragonsExpectation() {
-        for (Person person : inIslandDragons.values()) {
+    public void updateLeavingPersonsExpectation() {
+        for (Person person : inIslandPersons.values()) {
             person.updateLeavingDragonsExpectation();
         }
     }
 
     public void awareBlueEyedRealDragonsLeave() {
         HashSet<Person> leavingPeople = new HashSet<>();
-        for (Person person : inIslandDragons.values()) {
+        for (Person person : inIslandPersons.values()) {
             if (((RealPerson) person).isAwareOfHavingBlueEyes()) {
                 leavingPeople.add(person);
             }
         }
         for (Person person : leavingPeople) {
-            inIslandDragons.remove(person.id);
+            inIslandPersons.remove(person.id);
             outOfIslandDragons.put(person.id, person);
         }
     }

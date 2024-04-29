@@ -10,7 +10,7 @@ public class ImaginedPerson extends Person {
     public void updateLeavingExpectation() {
         if (imaginedIslands == null) return;
         Boolean before = isExpectedToLeave;
-        isExpectedToLeave = imaginedIslands.size() == 1 && imaginedIslands.iterator().next().inIslandDragons.get(id).isBlueEyed;
+        isExpectedToLeave = imaginedIslands.size() == 1 && imaginedIslands.iterator().next().inIslandPersons.get(id).isBlueEyed;
         if (before != null && before && !isExpectedToLeave) {
             System.out.println("err in updateLeavingExpectation");
         }
@@ -19,7 +19,7 @@ public class ImaginedPerson extends Person {
         }
         if (imaginedIslands != null) {
             for (ImaginedIsland imaginedIsland: imaginedIslands) {
-                imaginedIsland.updateLeavingDragonsExpectation();
+                imaginedIsland.updateLeavingPersonsExpectation();
             }
         }
     }

@@ -8,21 +8,21 @@ public class ImaginedIsland extends Island {
     }
 
     public boolean isAlreadyImaginedBefore() {
-        Island island = imaginingPerson.island;
+        Island island = imaginingPerson.residenceIsland;
         while (!island.isReal()) {
             if (((ImaginedIsland)island).sameEyeColors(this)) {
                 return true;
             }
-            island = ((ImaginedIsland)island).imaginingPerson.island;
+            island = ((ImaginedIsland)island).imaginingPerson.residenceIsland;
         }
         return false;
     }
 
     private boolean sameEyeColors(ImaginedIsland other) {
-        if (inIslandDragons.size() != other.inIslandDragons.size()) return false;
-        for (Person person : inIslandDragons.values()) {
-            if (!other.inIslandDragons.containsKey(person.id)) return false;
-            if (person.isBlueEyed != other.inIslandDragons.get(person.id).isBlueEyed) return false;
+        if (inIslandPersons.size() != other.inIslandPersons.size()) return false;
+        for (Person person : inIslandPersons.values()) {
+            if (!other.inIslandPersons.containsKey(person.id)) return false;
+            if (person.isBlueEyed != other.inIslandPersons.get(person.id).isBlueEyed) return false;
         }
         return true;
     }
@@ -33,20 +33,20 @@ public class ImaginedIsland extends Island {
     }
 
     @Override
-    public void updateLeavingDragonsExpectation() {
-        for (Person person : inIslandDragons.values()) {
+    public void updateLeavingPersonsExpectation() {
+        for (Person person : inIslandPersons.values()) {
             ((ImaginedPerson) person).updateLeavingExpectation();
         }
     }
 
     public boolean isLeavingExpectationMatchObservation(Island island) {
-        for (Person person : island.inIslandDragons.values()) {
-            if ((inIslandDragons.get(person.id)).imaginedIslands == null) continue; // leaf dragon
-            if (((ImaginedPerson)inIslandDragons.get(person.id)).isExpectedToLeave) return false;
+        for (Person person : island.inIslandPersons.values()) {
+            if ((inIslandPersons.get(person.id)).imaginedIslands == null) continue; // leaf dragon
+            if (((ImaginedPerson) inIslandPersons.get(person.id)).isExpectedToLeave) return false;
         }
         for (Person person : island.outOfIslandDragons.values()) {
-            if ((inIslandDragons.get(person.id)).imaginedIslands == null) continue; // leaf dragon
-            if (!((ImaginedPerson)inIslandDragons.get(person.id)).isExpectedToLeave) return false;
+            if ((inIslandPersons.get(person.id)).imaginedIslands == null) continue; // leaf dragon
+            if (!((ImaginedPerson) inIslandPersons.get(person.id)).isExpectedToLeave) return false;
         }
         return true;
     }
