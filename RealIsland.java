@@ -3,12 +3,12 @@ import java.util.HashSet;
 public class RealIsland extends Island {
     static int instanceCount = 0;
 
-    RealIsland(int dragonsCount) {
-        super(dragonsCount);
+    RealIsland(int personsCount) {
+        super(personsCount);
         if (instanceCount > 0) {
             System.out.println("Shouldn't create more than 1 real islands");
         }
-        for (int i=1; i<=dragonsCount; i++) {
+        for (int i=1; i<=personsCount; i++) {
             RealPerson realDragon = new RealPerson(this, "Dragon_" + i);
             inIslandPersons.put(realDragon.id, realDragon);
         }
