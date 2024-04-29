@@ -1,6 +1,6 @@
 import java.util.HashSet;
 
-public abstract class Dragon {
+public abstract class Person {
     final Island island;
     final boolean isBlueEyed;
     final String id;
@@ -9,7 +9,7 @@ public abstract class Dragon {
 
     HashSet<ImaginedIsland> imaginedIslands;
 
-    protected Dragon(boolean pIsBlueEyed, String pId, Island pIsland) {
+    protected Person(boolean pIsBlueEyed, String pId, Island pIsland) {
         isBlueEyed = pIsBlueEyed;
         id = pId;
         island = pIsland;
@@ -19,13 +19,13 @@ public abstract class Dragon {
     public void createImaginedPossibleIslands() {
         imaginedIslands = new HashSet<>();
         for (boolean bool: new boolean[] {true, false}) {
-            HashSet<Dragon> inIslandBlueEyedDragons = island.getInIslandBlueEyedDragons();
-            if (inIslandBlueEyedDragons.size() == 1 && inIslandBlueEyedDragons.iterator().next() == this && !bool) continue;
+            HashSet<Person> inIslandBlueEyedPeople = island.getInIslandBlueEyedDragons();
+            if (inIslandBlueEyedPeople.size() == 1 && inIslandBlueEyedPeople.iterator().next() == this && !bool) continue;
             ImaginedIsland imaginedIsland = new ImaginedIsland(island.numberOfDragons, this);
-            for (Dragon dragon: island.inIslandDragons.values()) {
-                boolean isImaginedDragonBlueEyed = dragon.isBlueEyed;
-                if (dragon == this) isImaginedDragonBlueEyed = bool;
-                ImaginedDragon imaginedDragon = new ImaginedDragon(isImaginedDragonBlueEyed, dragon.id, this, imaginedIsland);
+            for (Person person : island.inIslandDragons.values()) {
+                boolean isImaginedDragonBlueEyed = person.isBlueEyed;
+                if (person == this) isImaginedDragonBlueEyed = bool;
+                ImaginedPerson imaginedDragon = new ImaginedPerson(isImaginedDragonBlueEyed, person.id, this, imaginedIsland);
                 imaginedIsland.inIslandDragons.put(imaginedDragon.id, imaginedDragon);
                 imaginedIslands.add(imaginedIsland);
             }

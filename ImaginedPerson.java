@@ -1,10 +1,10 @@
-public class ImaginedDragon extends Dragon {
+public class ImaginedPerson extends Person {
     static int totalExpectedToLeaveCount = 0;
-    final Dragon imaginingDragon;
+    final Person imaginingPerson;
     Boolean isExpectedToLeave;
-    public ImaginedDragon(boolean isBlueEyed, String id, Dragon pImaginingDragon, Island pIsland) {
+    public ImaginedPerson(boolean isBlueEyed, String id, Person pImaginingPerson, Island pIsland) {
         super(isBlueEyed, id, pIsland);
-        imaginingDragon = pImaginingDragon;
+        imaginingPerson = pImaginingPerson;
     }
 
     public void updateLeavingExpectation() {

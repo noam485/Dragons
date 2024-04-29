@@ -1,6 +1,6 @@
-public class RealDragon extends Dragon {
+public class RealPerson extends Person {
     static int instanceCount = 0;
-    public RealDragon(RealIsland realIsland, String pId) {
+    public RealPerson(RealIsland realIsland, String pId) {
         super(true, pId, realIsland);
         if (instanceCount >= island.numberOfDragons) {
             System.out.println("shouldn't have more than " + island.numberOfDragons + " real dragons");

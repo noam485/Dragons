@@ -4,8 +4,8 @@ import java.util.HashSet;
 public abstract class Island {
     final int numberOfDragons;
 
-    HashMap<String, Dragon> inIslandDragons = new HashMap<>();
-    HashMap<String, Dragon> outOfIslandDragons = new HashMap<>();
+    HashMap<String, Person> inIslandDragons = new HashMap<>();
+    HashMap<String, Person> outOfIslandDragons = new HashMap<>();
 
     public Island(int pNumberOfDragons) {
         numberOfDragons = pNumberOfDragons;
@@ -14,32 +14,32 @@ public abstract class Island {
     abstract boolean isReal();
 
     public void createImaginedPossibleIslands() {
-        for (Dragon dragon: inIslandDragons.values()) {
-            dragon.createImaginedPossibleIslands();
+        for (Person person : inIslandDragons.values()) {
+            person.createImaginedPossibleIslands();
         }
     }
 
     public abstract void updateLeavingDragonsExpectation();
 
 
-    public HashSet<Dragon> getInIslandBlueEyedDragons() {
-        HashSet<Dragon> blueEyed = new HashSet<>();
-        for (Dragon dragon: inIslandDragons.values()) {
-            if (dragon.isBlueEyed) blueEyed.add(dragon);
+    public HashSet<Person> getInIslandBlueEyedDragons() {
+        HashSet<Person> blueEyed = new HashSet<>();
+        for (Person person : inIslandDragons.values()) {
+            if (person.isBlueEyed) blueEyed.add(person);
         }
         return blueEyed;
     }
 
     public void updatePossibleImaginedIslands() {
-        for (Dragon dragon: inIslandDragons.values()) {
-            dragon.updatePossibleImaginedIslands();
+        for (Person person : inIslandDragons.values()) {
+            person.updatePossibleImaginedIslands();
         }
     }
 
     public int depth() {
         int depth = 0;
-        for (Dragon dragon: inIslandDragons.values()) {
-            depth = Math.max(depth, dragon.depth());
+        for (Person person : inIslandDragons.values()) {
+            depth = Math.max(depth, person.depth());
         }
         return depth;
     }
