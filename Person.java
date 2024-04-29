@@ -37,7 +37,7 @@ public abstract class Person {
         }
     }
 
-    public void updateLeavingDragonsExpectation() {
+    public void updateLeavingPersonsExpectation() {
         for (ImaginedIsland imaginedIsland: imaginedIslands) {
             imaginedIsland.updateLeavingPersonsExpectation();
         }

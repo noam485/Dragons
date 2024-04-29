@@ -25,11 +25,11 @@ public class RealIsland extends Island {
     @Override
     public void updateLeavingPersonsExpectation() {
         for (Person person : inIslandPersons.values()) {
-            person.updateLeavingDragonsExpectation();
+            person.updateLeavingPersonsExpectation();
         }
     }
 
-    public void awareBlueEyedRealDragonsLeave() {
+    public void awareBlueEyedPersonsLeave() {
         HashSet<Person> leavingPeople = new HashSet<>();
         for (Person person : inIslandPersons.values()) {
             if (((RealPerson) person).isAwareOfHavingBlueEyes()) {

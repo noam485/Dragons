@@ -6,7 +6,7 @@ public class Main {
 		for (int i=1; i< 10; i++) {
 			System.out.println("day " + i);
 			realIsland.updateLeavingPersonsExpectation();
-			realIsland.awareBlueEyedRealDragonsLeave();
+			realIsland.awareBlueEyedPersonsLeave();
 			realIsland.updatePossibleImaginedIslands();
 			System.out.println(realIsland.inIslandPersons.size() + " / " + realIsland.outOfIslandDragons.size() + ". depth: " + realIsland.depth());
 			if (realIsland.inIslandPersons.size() == 0) {
