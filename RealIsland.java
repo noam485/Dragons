@@ -3,14 +3,14 @@ import java.util.HashSet;
 public class RealIsland extends Island {
     static int instanceCount = 0;
 
-    RealIsland(int personsCount) {
+    RealIsland(int personsCount) throws Exception {
         super(personsCount);
         if (instanceCount > 0) {
-            System.out.println("Shouldn't create more than 1 real islands");
+            throw new Exception("Shouldn't create more than 1 real islands");
         }
         for (int i=1; i<=personsCount; i++) {
-            RealPerson realDragon = new RealPerson(this, "Dragon_" + i);
-            inIslandPersons.put(realDragon.id, realDragon);
+            RealPerson realPerson = new RealPerson(this, "Person_" + i);
+            inIslandPersons.put(realPerson.id, realPerson);
         }
         for (Person person : inIslandPersons.values()) {
             person.createImaginedPossibleIslands();

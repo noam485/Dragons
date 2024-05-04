@@ -1,7 +1,7 @@
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		RealIsland realIsland = new RealIsland(4);
 		for (int i=1; i< 10; i++) {
 			System.out.println("day " + i);

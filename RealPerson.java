@@ -1,9 +1,9 @@
 public class RealPerson extends Person {
     static int instanceCount = 0;
-    public RealPerson(RealIsland realIsland, String pId) {
+    public RealPerson(RealIsland realIsland, String pId) throws Exception {
         super(true, pId, realIsland);
         if (instanceCount >= residenceIsland.numberOfPersons) {
-            System.out.println("shouldn't have more than " + residenceIsland.numberOfPersons + " real dragons");
+            throw new Exception("shouldn't have more than " + residenceIsland.numberOfPersons + " real persons");
         }
     }
 
