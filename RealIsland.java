@@ -4,7 +4,7 @@ public class RealIsland extends Island {
     static int instanceCount = 0;
 
     RealIsland(int personsCount) throws Exception {
-        super(personsCount);
+        super(personsCount, null);
         if (instanceCount > 0) {
             throw new Exception("Shouldn't create more than 1 real islands");
         }
@@ -15,11 +15,6 @@ public class RealIsland extends Island {
         for (Person person : inIslandPersons.values()) {
             person.createImaginedPossibleIslands();
         }
-    }
-
-    @Override
-    boolean isReal() {
-        return true;
     }
 
     @Override

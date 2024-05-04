@@ -7,11 +7,31 @@ public abstract class Island {
     HashMap<String, Person> inIslandPersons = new HashMap<>();
     HashMap<String, Person> outOfIslandPersons = new HashMap<>();
 
-    public Island(int pNumberOfPersons) {
+    final Person imaginingPerson;
+    public Island(int pNumberOfPersons, Person pImaginingPerson) {
         numberOfPersons = pNumberOfPersons;
+        imaginingPerson = pImaginingPerson;
     }
 
-    abstract boolean isReal();
+    public boolean isAlreadyImaginedBefore() {
+        Island island = imaginingPerson.residenceIsland;
+        while (island.imaginingPerson != null) {
+            if ((island).sameEyeColors(this)) {
+                return true;
+            }
+            island = (island).imaginingPerson.residenceIsland;
+        }
+        return false;
+    }
+
+    private boolean sameEyeColors(Island other) {
+        if (inIslandPersons.size() != other.inIslandPersons.size()) return false;
+        for (Person person : inIslandPersons.values()) {
+            if (!other.inIslandPersons.containsKey(person.id)) return false;
+            if (person.isBlueEyed != other.inIslandPersons.get(person.id).isBlueEyed) return false;
+        }
+        return true;
+    }
 
     public void createImaginedPossibleIslands() {
         for (Person person : inIslandPersons.values()) {

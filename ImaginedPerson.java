@@ -18,7 +18,7 @@ public class ImaginedPerson extends Person {
             totalExpectedToLeaveCount ++;
         }
         if (imaginedIslands != null) {
-            for (ImaginedIsland imaginedIsland: imaginedIslands) {
+            for (Island imaginedIsland: imaginedIslands) {
                 imaginedIsland.updateLeavingPersonsExpectation();
             }
         }
