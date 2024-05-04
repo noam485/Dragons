@@ -43,7 +43,7 @@ public abstract class Island {
 
     public void updatePossibleImaginedIslands() {
         for (Person person : inIslandPersons.values()) {
-            person.updatePossibleImaginedIslands();
+            person.removeImpossibleImaginedIslands();
         }
     }
 

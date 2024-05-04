@@ -43,7 +43,7 @@ public abstract class Person {
         }
     }
 
-    public void updatePossibleImaginedIslands() {
+    public void removeImpossibleImaginedIslands() {
         HashSet<ImaginedIsland> impossibleImaginedIslands = new HashSet<>();
         if (imaginedIslands == null) return;
         for (ImaginedIsland imaginedIsland: imaginedIslands) {
