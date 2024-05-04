@@ -38,16 +38,4 @@ public class ImaginedIsland extends Island {
             ((ImaginedPerson) person).updateLeavingExpectation();
         }
     }
-
-    public boolean isLeavingExpectationMatchObservation(Island island) {
-        for (Person person : island.inIslandPersons.values()) {
-            if ((inIslandPersons.get(person.id)).imaginedIslands == null) continue; // leaf dragon
-            if (((ImaginedPerson) inIslandPersons.get(person.id)).isExpectedToLeave) return false;
-        }
-        for (Person person : island.outOfIslandDragons.values()) {
-            if ((inIslandPersons.get(person.id)).imaginedIslands == null) continue; // leaf dragon
-            if (!((ImaginedPerson) inIslandPersons.get(person.id)).isExpectedToLeave) return false;
-        }
-        return true;
-    }
 }

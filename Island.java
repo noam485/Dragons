@@ -5,10 +5,10 @@ public abstract class Island {
     final int numberOfPersons;
 
     HashMap<String, Person> inIslandPersons = new HashMap<>();
-    HashMap<String, Person> outOfIslandDragons = new HashMap<>();
+    HashMap<String, Person> outOfIslandPersons = new HashMap<>();
 
-    public Island(int pNumberOfDragons) {
-        numberOfPersons = pNumberOfDragons;
+    public Island(int pNumberOfPersons) {
+        numberOfPersons = pNumberOfPersons;
     }
 
     abstract boolean isReal();
@@ -27,7 +27,7 @@ public abstract class Island {
         for (Person person : inIslandPersons.values()) {
             if (person.isBlueEyed) count++;
         }
-        for (Person person : outOfIslandDragons.values()) {
+        for (Person person : outOfIslandPersons.values()) {
             if (person.isBlueEyed) count++;
         }
         return count;

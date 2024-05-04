@@ -38,7 +38,7 @@ public class RealIsland extends Island {
         }
         for (Person person : leavingPeople) {
             inIslandPersons.remove(person.id);
-            outOfIslandDragons.put(person.id, person);
+            outOfIslandPersons.put(person.id, person);
         }
     }
 }

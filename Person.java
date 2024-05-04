@@ -47,13 +47,25 @@ public abstract class Person {
         HashSet<ImaginedIsland> impossibleImaginedIslands = new HashSet<>();
         if (imaginedIslands == null) return;
         for (ImaginedIsland imaginedIsland: imaginedIslands) {
-            if (imaginedIsland.isLeavingExpectationMatchObservation(residenceIsland)) {
+            if (isLeavingExpectationMatchObservation(imaginedIsland)) {
                 imaginedIsland.updatePossibleImaginedIslands();
             } else {
                 impossibleImaginedIslands.add(imaginedIsland);
             }
         }
         imaginedIslands.removeAll(impossibleImaginedIslands);
+    }
+
+    private boolean isLeavingExpectationMatchObservation(Island imaginedIsland) {
+        for (Person person : residenceIsland.inIslandPersons.values()) {
+            if ((imaginedIsland.inIslandPersons.get(person.id)).imaginedIslands == null) continue; // leaf person
+            if (((ImaginedPerson) imaginedIsland.inIslandPersons.get(person.id)).isExpectedToLeave) return false;
+        }
+        for (Person person : residenceIsland.outOfIslandPersons.values()) {
+            if ((imaginedIsland.inIslandPersons.get(person.id)).imaginedIslands == null) continue; // leaf person
+            if (!((ImaginedPerson) imaginedIsland.inIslandPersons.get(person.id)).isExpectedToLeave) return false;
+        }
+        return true;
     }
 
     public int depth() {
