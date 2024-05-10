@@ -7,7 +7,5 @@ public class RealPerson extends Person {
         }
     }
 
-    public boolean isAwareOfHavingBlueEyes() {
-        return imaginedIslands.size() == 1 && imaginedIslands.iterator().next().inIslandPersons.get(id).isBlueEyed;
-    }
+
 }

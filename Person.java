@@ -16,6 +16,10 @@ public abstract class Person {
         uniqueId = nextUniqueId++;
     }
 
+    public boolean isAwareOfHavingBlueEyes() {
+        return imaginedIslands.size() == 1 && imaginedIslands.iterator().next().inIslandPersons.get(id).isBlueEyed;
+    }
+
     public void createImaginedPossibleIslands() {
         imaginedIslands = new HashSet<>();
         for (boolean myEyesAreBlue: new boolean[] {true, false}) {

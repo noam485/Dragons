@@ -1,10 +1,7 @@
 public class ImaginedPerson extends Person {
-    static int totalExpectedToLeaveCount = 0;
-    final Person imaginingPerson;
     Boolean isExpectedToLeave;
     public ImaginedPerson(boolean isBlueEyed, String id, Person pImaginingPerson, Island pIsland) {
         super(isBlueEyed, id, pIsland);
-        imaginingPerson = pImaginingPerson;
     }
 
     public void updateLeavingExpectation() {
@@ -13,9 +10,6 @@ public class ImaginedPerson extends Person {
         isExpectedToLeave = imaginedIslands.size() == 1 && imaginedIslands.iterator().next().inIslandPersons.get(id).isBlueEyed;
         if (before != null && before && !isExpectedToLeave) {
             System.out.println("err in updateLeavingExpectation");
-        }
-        if (isExpectedToLeave && (before == null || !before)) {
-            totalExpectedToLeaveCount ++;
         }
         if (imaginedIslands != null) {
             for (Island imaginedIsland: imaginedIslands) {
