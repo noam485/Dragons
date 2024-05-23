@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.HashSet;
 
-public abstract class Island {
+public class Island {
     final int numberOfPersons;
 
     HashMap<String, Person> inIslandPersons = new HashMap<>();
@@ -39,8 +39,11 @@ public abstract class Island {
         }
     }
 
-    public abstract void updateLeavingPersonsExpectation();
-
+    public void updateLeavingPersonsExpectation() {
+        for (Person person : inIslandPersons.values()) {
+            person.reasonWhoShouldLeave();
+        }
+    }
 
     public int getBlueEyedPersonCount() {
         int count = 0;

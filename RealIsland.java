@@ -9,7 +9,7 @@ public class RealIsland extends Island {
             throw new Exception("Shouldn't create more than 1 real islands");
         }
         for (int i=1; i<=personsCount; i++) {
-            RealPerson realPerson = new RealPerson(this, "Person_" + i);
+            Person realPerson = new Person(true, "Person_" + i, this);
             inIslandPersons.put(realPerson.id, realPerson);
         }
         for (Person person : inIslandPersons.values()) {
@@ -20,14 +20,14 @@ public class RealIsland extends Island {
     @Override
     public void updateLeavingPersonsExpectation() {
         for (Person person : inIslandPersons.values()) {
-            person.updateLeavingPersonsExpectation();
+            person.reasonWhoShouldLeave();
         }
     }
 
     public void awareBlueEyedPersonsLeave() {
         HashSet<Person> leavingPeople = new HashSet<>();
         for (Person person : inIslandPersons.values()) {
-            if (((RealPerson) person).isAwareOfHavingBlueEyes()) {
+            if (person.isAwareOfHavingBlueEyes()) {
                 leavingPeople.add(person);
             }
         }
