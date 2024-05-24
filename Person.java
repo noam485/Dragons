@@ -3,13 +3,10 @@ import java.util.HashSet;
 public class Person {
     final Island residenceIsland;
     final boolean isBlueEyed;
-    final String id; // an instance of the person may appear on another island (real/imagined) and would have the same id
-    final long uniqueId; // unique over all real and imagined persons
+    final String id;
+    final long uniqueId;
     static long nextUniqueId = 1;
-
-    Boolean shouldLeave;
-
-    HashSet<Island> imaginedIslands; // each imagined island is a possible island in the person's eyes
+    HashSet<Island> possibleIslands;
 
     protected Person(boolean pIsBlueEyed, String pId, Island pIsland) {
         isBlueEyed = pIsBlueEyed;
@@ -19,11 +16,11 @@ public class Person {
     }
 
     public boolean isAwareOfHavingBlueEyes() {
-        return imaginedIslands.size() == 1 && imaginedIslands.iterator().next().inIslandPersons.get(id).isBlueEyed;
+        return possibleIslands.size() == 1 && possibleIslands.iterator().next().inIslandPersons.get(id).isBlueEyed;
     }
 
-    public void createImaginedPossibleIslands() {
-        imaginedIslands = new HashSet<>();
+    public void generatePossibleIslands() {
+        possibleIslands = new HashSet<>();
         for (boolean myEyesAreBlue: new boolean[] {true, false}) {
             HashSet<Person> inIslandBlueEyedPersons = residenceIsland.getInIslandBlueEyedPersons();
             if (residenceIsland.getBlueEyedPersonCount() == 1 && inIslandBlueEyedPersons.iterator().next() == this && !myEyesAreBlue) continue; // if the only blue-eyed is this person then this person would know they are blue-eyed
@@ -33,59 +30,45 @@ public class Person {
                 if (person == this) isImaginedPersonBlueEyed = myEyesAreBlue;
                 Person imaginedPerson = new Person(isImaginedPersonBlueEyed, person.id, island);
                 island.inIslandPersons.put(imaginedPerson.id, imaginedPerson);
-                imaginedIslands.add(island);
+                possibleIslands.add(island);
             }
         }
-        for (Island imaginedIsland: imaginedIslands) {
-            if (!imaginedIsland.isAlreadyImaginedBefore()) {
-                imaginedIsland.createImaginedPossibleIslands();
-            }
-        }
-    }
-
-    public void reasonWhoShouldLeave() {
-        if (imaginedIslands == null) return;
-        Boolean before = shouldLeave;
-        shouldLeave = imaginedIslands.size() == 1 && imaginedIslands.iterator().next().inIslandPersons.get(id).isBlueEyed;
-        if (before != null && before && !shouldLeave) {
-            System.out.println("err in updateLeavingExpectation");
-        }
-        if (imaginedIslands != null) {
-            for (Island imaginedIsland: imaginedIslands) {
-                imaginedIsland.updateLeavingPersonsExpectation();
+        for (Island island: possibleIslands) {
+            if (!island.isAlreadyGeneratedBefore()) {
+                island.generatePossibleIslands();
             }
         }
     }
 
     public void removeImpossibleImaginedIslands() {
         HashSet<Island> impossibleImaginedIslands = new HashSet<>();
-        if (imaginedIslands == null) return;
-        for (Island imaginedIsland: imaginedIslands) {
+        if (possibleIslands == null) return;
+        for (Island imaginedIsland: possibleIslands) {
             if (isLeavingExpectationMatchObservation(imaginedIsland)) {
                 imaginedIsland.updatePossibleImaginedIslands();
             } else {
                 impossibleImaginedIslands.add(imaginedIsland);
             }
         }
-        imaginedIslands.removeAll(impossibleImaginedIslands);
+        possibleIslands.removeAll(impossibleImaginedIslands);
     }
 
     private boolean isLeavingExpectationMatchObservation(Island imaginedIsland) {
         for (Person person : residenceIsland.inIslandPersons.values()) {
-            if ((imaginedIsland.inIslandPersons.get(person.id)).imaginedIslands == null) continue; // leaf person
-            if (( imaginedIsland.inIslandPersons.get(person.id)).shouldLeave) return false;
+            if ((imaginedIsland.inIslandPersons.get(person.id)).possibleIslands == null) continue; // leaf person
+            if (( imaginedIsland.inIslandPersons.get(person.id)).isAwareOfHavingBlueEyes()) return false;
         }
         for (Person person : residenceIsland.outOfIslandPersons.values()) {
-            if ((imaginedIsland.inIslandPersons.get(person.id)).imaginedIslands == null) continue; // leaf person
-            if (!( imaginedIsland.inIslandPersons.get(person.id)).shouldLeave) return false;
+            if ((imaginedIsland.inIslandPersons.get(person.id)).possibleIslands == null) continue; // leaf person
+            if (!( imaginedIsland.inIslandPersons.get(person.id)).isAwareOfHavingBlueEyes()) return false;
         }
         return true;
     }
 
     public int depth() {
-        if (imaginedIslands == null) return 1;
+        if (possibleIslands == null) return 1;
         int depth = 0;
-        for (Island imaginedIsland: imaginedIslands) {
+        for (Island imaginedIsland: possibleIslands) {
             depth = Math.max(depth, imaginedIsland.depth());
         }
         return depth + 1;
