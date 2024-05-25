@@ -17,7 +17,7 @@ public class Island {
         numberOfPersons = pNumberOfPersons;
         for (int i=1; i<= pNumberOfPersons; i++) {
             Person person = new Person(true, "Person_" + i, this);
-            inIslandPersons.put(person.id, person);
+            inIslandPersons.put(person.name, person);
         }
         for (Person person : inIslandPersons.values()) {
             person.generatePossibleIslands();
@@ -38,8 +38,8 @@ public class Island {
     private boolean sameEyeColors(Island other) {
         if (inIslandPersons.size() != other.inIslandPersons.size()) return false;
         for (Person person : inIslandPersons.values()) {
-            if (!other.inIslandPersons.containsKey(person.id)) return false;
-            if (person.isBlueEyed != other.inIslandPersons.get(person.id).isBlueEyed) return false;
+            if (!other.inIslandPersons.containsKey(person.name)) return false;
+            if (person.isBlueEyed != other.inIslandPersons.get(person.name).isBlueEyed) return false;
         }
         return true;
     }
@@ -48,17 +48,6 @@ public class Island {
         for (Person person : inIslandPersons.values()) {
             person.generatePossibleIslands();
         }
-    }
-
-    public int getBlueEyedPersonCount() {
-        int count = 0;
-        for (Person person : inIslandPersons.values()) {
-            if (person.isBlueEyed) count++;
-        }
-        for (Person person : outOfIslandPersons.values()) {
-            if (person.isBlueEyed) count++;
-        }
-        return count;
     }
 
     public HashSet<Person> getInIslandBlueEyedPersons() {
@@ -91,8 +80,8 @@ public class Island {
             }
         }
         for (Person person : leavingPeople) {
-            inIslandPersons.remove(person.id);
-            outOfIslandPersons.put(person.id, person);
+            inIslandPersons.remove(person.name);
+            outOfIslandPersons.put(person.name, person);
         }
     }
 }

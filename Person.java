@@ -1,35 +1,34 @@
 import java.util.HashSet;
 
 public class Person {
+    static long nextUniqueId = 1;
     final Island residenceIsland;
     final boolean isBlueEyed;
-    final String id;
+    final String name;
     final long uniqueId;
-    static long nextUniqueId = 1;
     HashSet<Island> possibleIslands;
 
-    protected Person(boolean pIsBlueEyed, String pId, Island pIsland) {
+    protected Person(boolean pIsBlueEyed, String pName, Island pIsland) {
         isBlueEyed = pIsBlueEyed;
-        id = pId;
+        name = pName;
         residenceIsland = pIsland;
         uniqueId = nextUniqueId++;
     }
 
     public boolean isAwareOfHavingBlueEyes() {
-        return possibleIslands.size() == 1 && possibleIslands.iterator().next().inIslandPersons.get(id).isBlueEyed;
+        return possibleIslands.size() == 1 && possibleIslands.iterator().next().inIslandPersons.get(name).isBlueEyed;
     }
 
     public void generatePossibleIslands() {
         possibleIslands = new HashSet<>();
         for (boolean myEyesAreBlue: new boolean[] {true, false}) {
-            HashSet<Person> inIslandBlueEyedPersons = residenceIsland.getInIslandBlueEyedPersons();
-            if (residenceIsland.getBlueEyedPersonCount() == 1 && inIslandBlueEyedPersons.iterator().next() == this && !myEyesAreBlue) continue; // if the only blue-eyed is this person then this person would know they are blue-eyed
+            if (!areThereBlueEyedNeighbours() && !myEyesAreBlue) continue; // if the only blue-eyed is this person then this person would know they are blue-eyed
             Island island = new Island(residenceIsland.numberOfPersons, this);
             for (Person person : residenceIsland.inIslandPersons.values()) {
                 boolean isImaginedPersonBlueEyed = person.isBlueEyed;
                 if (person == this) isImaginedPersonBlueEyed = myEyesAreBlue;
-                Person imaginedPerson = new Person(isImaginedPersonBlueEyed, person.id, island);
-                island.inIslandPersons.put(imaginedPerson.id, imaginedPerson);
+                Person imaginedPerson = new Person(isImaginedPersonBlueEyed, person.name, island);
+                island.inIslandPersons.put(imaginedPerson.name, imaginedPerson);
                 possibleIslands.add(island);
             }
         }
@@ -38,6 +37,18 @@ public class Person {
                 island.generatePossibleIslands();
             }
         }
+    }
+
+    private boolean areThereBlueEyedNeighbours() {
+        for (Person person: residenceIsland.inIslandPersons.values()) {
+            if (person == this) continue;
+            if (person.isBlueEyed) return true;
+        }
+        for (Person person: residenceIsland.outOfIslandPersons.values()) {
+            if (person == this) continue;
+            if (person.isBlueEyed) return true;
+        }
+        return false;
     }
 
     public void removeImpossibleImaginedIslands() {
@@ -55,12 +66,12 @@ public class Person {
 
     private boolean isLeavingExpectationMatchObservation(Island imaginedIsland) {
         for (Person person : residenceIsland.inIslandPersons.values()) {
-            if ((imaginedIsland.inIslandPersons.get(person.id)).possibleIslands == null) continue; // leaf person
-            if (( imaginedIsland.inIslandPersons.get(person.id)).isAwareOfHavingBlueEyes()) return false;
+            if ((imaginedIsland.inIslandPersons.get(person.name)).possibleIslands == null) continue; // leaf person
+            if (( imaginedIsland.inIslandPersons.get(person.name)).isAwareOfHavingBlueEyes()) return false;
         }
         for (Person person : residenceIsland.outOfIslandPersons.values()) {
-            if ((imaginedIsland.inIslandPersons.get(person.id)).possibleIslands == null) continue; // leaf person
-            if (!( imaginedIsland.inIslandPersons.get(person.id)).isAwareOfHavingBlueEyes()) return false;
+            if ((imaginedIsland.inIslandPersons.get(person.name)).possibleIslands == null) continue; // leaf person
+            if (!( imaginedIsland.inIslandPersons.get(person.name)).isAwareOfHavingBlueEyes()) return false;
         }
         return true;
     }
