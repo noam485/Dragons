@@ -19,9 +19,7 @@ public class Island {
             Person person = new Person(true, "Person_" + i, this);
             inIslandPersons.put(person.name, person);
         }
-        for (Person person : inIslandPersons.values()) {
-            person.generatePossibleIslands();
-        }
+        generatePossibleIslands();
     }
 
     public boolean isAlreadyGeneratedBefore() {
@@ -35,7 +33,7 @@ public class Island {
         return false;
     }
 
-    private boolean sameEyeColors(Island other) { // assuming none of this and other islands' persons has left the islands
+    private boolean sameEyeColors(Island other) {
         if (inIslandPersons.size() != other.inIslandPersons.size()) return false;
         for (Person person : inIslandPersons.values()) {
             if (person.isBlueEyed != other.inIslandPersons.get(person.name).isBlueEyed) return false;
