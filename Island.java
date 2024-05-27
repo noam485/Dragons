@@ -4,9 +4,9 @@ import java.util.HashSet;
 public class Island {
     final int numberOfPersons;
 
-    HashMap<String, Person> inIslandPersons = new HashMap<>();
-    HashMap<String, Person> outOfIslandPersons = new HashMap<>();
-    Person imaginingPerson;
+    HashMap<String, Person> inIslandPersons = new HashMap<>(); // key: person name
+    HashMap<String, Person> outOfIslandPersons = new HashMap<>(); // key: person name
+    Person imaginingPerson; // the person that sees this as a possible island
 
     public Island(int pNumberOfPersons, Person pImaginingPerson) {
         numberOfPersons = pNumberOfPersons;
@@ -35,10 +35,9 @@ public class Island {
         return false;
     }
 
-    private boolean sameEyeColors(Island other) {
+    private boolean sameEyeColors(Island other) { // assuming none of this and other islands' persons has left the islands
         if (inIslandPersons.size() != other.inIslandPersons.size()) return false;
         for (Person person : inIslandPersons.values()) {
-            if (!other.inIslandPersons.containsKey(person.name)) return false;
             if (person.isBlueEyed != other.inIslandPersons.get(person.name).isBlueEyed) return false;
         }
         return true;
@@ -50,17 +49,9 @@ public class Island {
         }
     }
 
-    public HashSet<Person> getInIslandBlueEyedPersons() {
-        HashSet<Person> blueEyed = new HashSet<>();
+    public void updatePossibleIslands() {
         for (Person person : inIslandPersons.values()) {
-            if (person.isBlueEyed) blueEyed.add(person);
-        }
-        return blueEyed;
-    }
-
-    public void updatePossibleImaginedIslands() {
-        for (Person person : inIslandPersons.values()) {
-            person.removeImpossibleImaginedIslands();
+            person.removeImpossibleIslands();
         }
     }
 
@@ -83,5 +74,14 @@ public class Island {
             inIslandPersons.remove(person.name);
             outOfIslandPersons.put(person.name, person);
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Person person: inIslandPersons.values()) {
+            stringBuilder.append(person.isBlueEyed).append(" ");
+        }
+        return stringBuilder.toString();
     }
 }

@@ -51,12 +51,12 @@ public class Person {
         return false;
     }
 
-    public void removeImpossibleImaginedIslands() {
+    public void removeImpossibleIslands() {
         HashSet<Island> impossibleImaginedIslands = new HashSet<>();
         if (possibleIslands == null) return;
         for (Island imaginedIsland: possibleIslands) {
             if (isLeavingExpectationMatchObservation(imaginedIsland)) {
-                imaginedIsland.updatePossibleImaginedIslands();
+                imaginedIsland.updatePossibleIslands();
             } else {
                 impossibleImaginedIslands.add(imaginedIsland);
             }
