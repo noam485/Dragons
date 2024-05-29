@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -81,5 +82,22 @@ public class Island {
             stringBuilder.append(person.isBlueEyed).append(" ");
         }
         return stringBuilder.toString();
+    }
+
+    public String getLongestPath() {
+        int depth = depth();
+        for (Person person: inIslandPersons.values()) {
+            if (person.depth() == depth) {
+                if (person.possibleIslands == null) {
+                    return toString();
+                }
+                for (Island island: person.possibleIslands) {
+                    if (island.depth() == depth - 1) {
+                        return this + "\n" + island.getLongestPath();
+                    }
+                }
+            }
+        }
+        return toString();
     }
 }

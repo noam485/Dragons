@@ -29,8 +29,8 @@ public class Person {
                 if (person == this) isImaginedPersonBlueEyed = myEyesAreBlue;
                 Person imaginedPerson = new Person(isImaginedPersonBlueEyed, person.name, island);
                 island.inIslandPersons.put(imaginedPerson.name, imaginedPerson);
-                possibleIslands.add(island);
             }
+            possibleIslands.add(island);
         }
         for (Island island: possibleIslands) {
             if (!island.isAlreadyGeneratedBefore()) {
